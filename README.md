@@ -26,3 +26,5 @@ Options:
 ## Aufruf
 `vobi -v <Startzeit> -b <Endzeit>`  
 `vobi -v 0900 -b 1800`
+
+by jethi05
