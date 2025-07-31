@@ -1,0 +1,24 @@
+# Binaries and build artifacts
+/target/
+
+# Cargo package manager files that are generated
+**/*.rs.bk
+
+# Editor/IDE temporäre Dateien
+*.swp
+*~
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Backup files
+*.bak
+
