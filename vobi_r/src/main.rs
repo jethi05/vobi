@@ -9,7 +9,7 @@ fn main() {
                 .short('v')
                 .long("von")
                 .value_name("START")
-                .help("Startzeitpunkt")
+                .help("Startzeitpunkt 0730 (7.30 Uhr)")
                 .required(true)
         )
         .arg(
@@ -17,7 +17,7 @@ fn main() {
                 .short('b')
                 .long("bis")
                 .value_name("ENDE")
-                .help("Endzeitzeitpunkt")
+                .help("Endzeitzeitpunkt 1800 (18:00 Uhr)")
                 .required(true)
         )
         .get_matches();
