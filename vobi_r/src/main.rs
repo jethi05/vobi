@@ -1,22 +1,50 @@
-use std::io;
+use clap::{Arg, Command};
 fn main() {
-    let mut start_eingabe = String::new();
-    let mut end_eingabe = String::new();
-    println!("Beispiel 0900");
-    println!("Startzeit:");
-    io::stdin()
-        .read_line(&mut start_eingabe)
-        .unwrap();
-    let mut start_int_eingabe: i32 = start_eingabe.trim().parse().unwrap();
-    println!("Beispiel 1800");
-    println!("Endzeit:");
-    io::stdin()
-        .read_line(&mut end_eingabe)
-        .unwrap();
-    let mut end_int_eingabe: i32 = end_eingabe.trim().parse().unwrap();
-    println!("Folgende Zeiten wurden berücksichtigt:");
-    println!("Start {}", start_eingabe.trim());
-    println!("end {}", end_eingabe.trim());
-    let mut ergebnis = end_int_eingabe - start_int_eingabe;
-    println!("{}", ergebnis);
+    let matches = Command::new("VoBi")
+        .version("0.1")
+        .author("jethi05")
+       .about("Sagt dir, von wann bis wann du gearbeitet hast")
+        .arg(
+            Arg::new("von")
+                .short('v')
+                .long("von")
+                .value_name("START")
+                .help("Startzeitpunkt")
+                .required(true)
+        )
+        .arg(
+            Arg::new("bis")
+                .short('b')
+                .long("bis")
+                .value_name("ENDE")
+                .help("Endzeitzeitpunkt")
+                .required(true)
+        )
+        .get_matches();
+        
+    // Input wird erhalten und umgewandelt in Stunden und Minuten
+	let v = matches.get_one::<String>("von").expect("REASON").as_str();
+	let von_h: f32 = v[0..2].parse().unwrap();
+	let von_m: f32 = v[2..4].parse().unwrap();
+	let von = von_h + (von_m / 60.0);
+
+	let b = matches.get_one::<String>("bis").expect("REASON").as_str();
+	let bis_h: f32 = b[0..2].parse().unwrap();
+	let bis_m: f32 = b[2..4].parse().unwrap();
+	let bis = bis_h + (bis_m / 60.0);
+   
+    // Ergebnis berechnung 
+    let mut ergebnis = bis - von;
+   // Minimale Zeitberechnung 
+    if ergebnis >= 9.0 {
+        println!("45 Minuten Pause abgezogen");
+        ergebnis = ergebnis - 0.75;
+    }else if ergebnis >= 6.0 {
+        println!("30 Minuten Pause abgezogen");
+        ergebnis = ergebnis - 0.5;
+    }
+    let ergebnis_s = ergebnis.trunc();
+    let ergebnis_m = ((ergebnis - ergebnis_s) * 60.0).round() as u32;
+    println!("Du hast {} Stunden und {} Minuten", ergebnis_s, ergebnis_m);
+
 }
