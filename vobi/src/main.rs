@@ -1,27 +1,7 @@
 use clap::{Arg, Command};
-fn main() {
-    let matches = Command::new("VoBi")
-        .version("0.1")
-        .author("jethi05")
-       .about("Sagt dir, von wann bis wann du gearbeitet hast")
-        .arg(
-            Arg::new("von")
-                .short('v')
-                .long("von")
-                .value_name("START")
-                .help("Startzeitpunkt 0730 (7.30 Uhr)")
-                .required(true)
-        )
-        .arg(
-            Arg::new("bis")
-                .short('b')
-                .long("bis")
-                .value_name("ENDE")
-                .help("Endzeitzeitpunkt 1800 (18:00 Uhr)")
-                .required(true)
-        )
-        .get_matches();
-        
+
+fn berechne_zeit(matches: &clap::ArgMatches) {
+
     // Input wird erhalten und umgewandelt in Stunden und Minuten
 	let v = matches.get_one::<String>("von").expect("REASON").as_str();
 	let von_h: f32 = v[0..2].parse().unwrap();
@@ -46,5 +26,38 @@ fn main() {
     let ergebnis_s = ergebnis.trunc();
     let ergebnis_m = ((ergebnis - ergebnis_s) * 60.0).round() as u32;
     println!("Du hast {} Stunden und {} Minuten", ergebnis_s, ergebnis_m);
+}
+
+fn main() {
+    let matches = Command::new("VoBi")
+        .version("0.1")
+        .author("jethi05")
+       .about("Sagt dir, von wann bis wann du gearbeitet hast")
+        .arg(
+            Arg::new("von")
+                .short('v')
+                .long("von")
+                .value_name("START")
+                .help("Startzeitpunkt 0730 (7.30 Uhr)")
+                .required(false)
+        )
+        .arg(
+            Arg::new("bis")
+                .short('b')
+                .long("bis")
+                .value_name("ENDE")
+                .help("Endzeitzeitpunkt 1800 (18:00 Uhr)")
+                .required(false)
+        )
+        .get_matches();
+
+    if let Some(_v) = matches.get_one::<String>("von") {
+        if let Some(_b) = matches.get_one::<String>("bis") {
+            println!("beide Richtig hier funktion ausführen");
+            berechne_zeit(&matches);
+
+        }
+    }
+    
 
 }
