@@ -53,7 +53,6 @@ fn main() {
 
     if let Some(_v) = matches.get_one::<String>("von") {
         if let Some(_b) = matches.get_one::<String>("bis") {
-            println!("beide Richtig hier funktion ausführen");
             berechne_zeit(&matches);
 
         }
