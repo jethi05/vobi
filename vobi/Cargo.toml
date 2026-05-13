@@ -1,0 +1,9 @@
+[package]
+name = "vobi"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.44"
+clap = "4.5.42"
+colored = "3.1.1"
